@@ -223,4 +223,362 @@ var QuizState = (function(){
       var slides = pool.map(function(t){ return tCard(t); });
       return '<div class="screen inter">'
         + '<span class="kicker-tag">No estás sola</span>'
-        + '<h2>Está todo bien, ' + esc(QuizState.get('name') || 'amiga') + '. Miles de las más de 37 mil mujeres que rejuvenecieron con el Pegamento de Arroz
+        + '<h2>Está todo bien, ' + esc(QuizState.get('name') || 'amiga') + '. Miles de las más de 37 mil mujeres que rejuvenecieron con el Pegamento de Arroz Morado Coreano pasaron exactamente por esto.</h2>'
+        + '<p class="body" style="text-align:center">Mira lo que dicen sobre los métodos que <b>tú</b> probaste:</p>'
+        + carouselHtml(slides, 'brk-car') + '</div>'
+        + ctaBar('<button class="btn" id="btn-cta">' + s.cta + '</button>');
+    },
+
+    emotional: function(s){
+      var h = '<div class="screen">';
+      if (s.img2) {
+        h += '<div class="ba-card" style="margin-bottom:12px"><div class="ba-pair">'
+          + '<div class="half"><span class="ba-tag">Antes</span><img src="' + s.img + '" alt=""></div>'
+          + '<div class="half"><span class="ba-tag after">Después</span><img src="' + s.img2 + '" alt=""></div>'
+          + '</div></div>';
+      } else {
+        h += '<div class="emo-img"><img src="' + s.img + '" alt=""></div>';
+      }
+      if (s.caption) h += '<div class="emo-cap">' + s.caption + '</div>';
+      h += '<div class="emo-quote">' + s.quote + '</div><div class="options">';
+      s.options.forEach(function(o, i){
+        h += '<button class="opt single" data-i="' + i + '"><span class="emoji">' + o.e + '</span><span>' + o.t + '</span><span class="check"></span></button>';
+      });
+      return h + '</div></div>';
+    },
+
+    goal: function(s){
+      var h = '<div class="screen"><h1 class="q-title">' + fill(s.title) + '</h1><div class="options">';
+      s.options.forEach(function(o, i){
+        h += '<button class="opt single" data-i="' + i + '"><span class="emoji">' + o.e + '</span><span>' + o.t + '</span><span class="check"></span></button>';
+      });
+      h += '</div><div id="goal-extra"></div></div>'
+        + ctaBar('<button class="btn" id="btn-cta" disabled style="visibility:hidden">' + s.cta + '</button>');
+      return h;
+    },
+
+    loading: function(s){
+      var C = 2 * Math.PI * 52; // raio 52
+      var h = '<div class="screen loadv2">'
+        + '<div class="ring-wrap"><svg width="118" height="118" viewBox="0 0 118 118">'
+        + '<defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">'
+        + '<stop offset="0%" stop-color="#8E9FE5"/><stop offset="100%" stop-color="#4350A8"/></linearGradient></defs>'
+        + '<circle class="ring-bg" cx="59" cy="59" r="52"/>'
+        + '<circle class="ring-fg" id="ring-fg" cx="59" cy="59" r="52" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '"/>'
+        + '</svg><div class="ring-pct" id="ring-pct">0%</div></div>'
+        + '<div class="load-title">' + fill(s.title) + '</div>'
+        + '<div class="load-current" id="load-current"></div>';
+      if (s.items) {
+        h += '<div class="load-list">';
+        s.items.forEach(function(it, i){
+          h += '<div class="load-item" id="li-' + i + '"><span class="li-ico">⏳</span><span>' + it + '</span></div>';
+        });
+        h += '</div>';
+      }
+      if (s.carousel) h += carouselHtml(s.carousel.map(function(t){ return tCard(t); }), 'load-car');
+      if (s.baCarousel) h += carouselHtml(s.baCarousel.map(function(b){ return baCard(b, true); }), 'load-bacar');
+      if (s.credentials) {
+        var cr = s.credentials;
+        h += '<div class="cred-block"><img src="' + cr.img + '" alt="">'
+          + '<div><div class="cb-n">' + cr.name + (cr.check ? ' <span>✔</span>' : '') + '</div><ul>'
+          + cr.items.map(function(it){ return '<li>' + it + '</li>'; }).join('') + '</ul></div></div>';
+      }
+      if (s.social) h += '<div class="load-social">★★★★★ ' + s.social + '</div>';
+      return h + '</div>';
+    },
+
+    diagnosis: function(s){
+      var a = QuizState.answers();
+      var d = buildDiagnosis(a);
+      var name = QuizState.get('name') || 'amiga';
+      var age = QuizState.get('age_bucket') || '';
+      var findingsHtml = d.findings.map(function(f){ return '<div class="diag-alert"><span class="x">❌</span><span>' + f + '</span></div>'; }).join('');
+      var benefitsHtml = d.benefits.map(function(b){ return '<div class="benefit-card"><div class="bc-i">' + b.i + '</div><div class="bc-t">' + b.t + '</div></div>'; }).join('');
+      var zones = ['z-off','z-weak','z-on'];
+      var gauge = zones.map(function(z, i){
+        return '<div class="zone ' + z + (i === d.status.zone ? ' lit' : '') + '">' + (i === d.status.zone ? '<span class="pin"></span>' : '') + '</div>';
+      }).join('');
+      // gráfico de projeção (SVG): curva subindo Today -> Day 21
+      var chart = '<svg viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg">'
+        + '<line x1="28" y1="104" x2="312" y2="104" stroke="#E9E5DC" stroke-width="1.5"/>'
+        + '<line x1="28" y1="22" x2="312" y2="22" stroke="#BFE5CD" stroke-width="1.5" stroke-dasharray="5 4"/>'
+        + '<text x="312" y="15" font-size="9.5" font-weight="800" fill="#2E9E5B" text-anchor="end" font-family="Inter,sans-serif">TU META</text>'
+        + '<path d="M34 98 C 110 96, 150 78, 200 56 S 290 28, 306 25" fill="none" stroke="#5B6BD6" stroke-width="3.5" stroke-linecap="round"/>'
+        + '<circle cx="34" cy="98" r="6" fill="#D64545"/>'
+        + '<text x="34" y="86" font-size="9" font-weight="800" fill="#D64545" text-anchor="start" font-family="Inter,sans-serif">TÚ HOY</text>'
+        + '<circle cx="306" cy="25" r="6" fill="#2E9E5B"/>'
+        + '<text x="34" y="120" font-size="9" font-weight="700" fill="#6B7080" font-family="Inter,sans-serif">Hoy</text>'
+        + '<text x="124" y="120" font-size="9" font-weight="700" fill="#6B7080" font-family="Inter,sans-serif">Sem. 1</text>'
+        + '<text x="214" y="120" font-size="9" font-weight="700" fill="#6B7080" font-family="Inter,sans-serif">Sem. 2</text>'
+        + '<text x="306" y="120" font-size="9" font-weight="700" fill="#6B7080" text-anchor="end" font-family="Inter,sans-serif">Día 21</text>'
+        + '</svg>';
+      return '<div class="screen">'
+        + '<div class="diag-head"><img src="assets/t25-dryuna-diagnosis.jpg" alt="Dr. Yuna Mun">'
+        + '<div><div class="dh-t">Evaluación de la Dra. Yuna para ' + esc(name) + (age ? ', ' + age : '') + '</div>'
+        + '<div class="dh-s">Basada en TUS respuestas · comparada con su método clínico</div></div></div>'
+        + '<div class="diag-box-red">'
+        + '<div class="status-line">Estado del Escudo de la Piel</div>'
+        + '<div class="status-value">' + d.status.label + '</div>'
+        + '<div class="status-gauge">' + gauge + '</div>'
+        + '<div class="gauge-labels"><span>Apagado</span><span>Debilitado</span><span>Encendido</span></div>'
+        + '<div class="diag-alert-title">⚠️ Lo que encontré en TUS respuestas:</div>'
+        + findingsHtml + '</div>'
+        + '<div class="diag-box-green">💚 <b>La buena noticia: el escudo puede volver a ENCENDERSE — comprobado en mujeres ' + (age ? 'de ' + age : 'de tu edad') + '.</b> El Pegamento de Arroz Morado Coreano — en la proporción correcta para TU piel — es el interruptor. ✨</div>'
+        + '<div class="proj-chart"><div class="ng-title">Tu progresión prevista — próximos 21 días</div>' + chart + '</div>'
+        + '<div class="benefit-grid">' + benefitsHtml + '</div>'
+        + '<div class="diag-sign"><span class="signature" style="font-size:21px">Dr. Yuna Mun</span></div>'
+        + '</div>'
+        + ctaBar('<button class="btn" id="btn-cta">' + s.cta + '</button>');
+    },
+
+    futurepacing: function(s){
+      var fp = buildFuturePacing(QuizState.answers());
+      var items = fp.items.map(function(it){
+        return '<div class="fp-item' + (it.gold ? ' gold' : '') + '"><div class="wk">' + it.wk + '</div><div class="tx">' + it.tx + '</div></div>';
+      }).join('');
+      var proofHtml = fp.proof ? '<div class="fp-proof" style="margin-top:18px">' + tCard(fp.proof) + '</div>' : '';
+      return '<div class="screen inter">'
+        + '<span class="kicker-tag">Tu proyección</span>'
+        + '<h2>' + fp.title + '</h2>'
+        + '<div class="fp-hero"><img src="assets/sales-macro-bowl.jpg" alt="Pegamento de Arroz Morado Coreano"></div>'
+        + '<div class="fp-timeline">' + items + '</div>'
+        + proofHtml + '</div>'
+        + ctaBar('<button class="btn" id="btn-cta">' + s.cta + '</button>');
+    }
+  };
+
+  /* ---------- bind ---------- */
+  function bind(step){
+    var backBtn = document.getElementById('btn-back');
+    if (backBtn) backBtn.addEventListener('click', function(){ go(current - 1); });
+
+    var type = step.type;
+
+    if (type === 'landing') {
+      document.getElementById('btn-cta').addEventListener('click', function(){
+        track('QuizStart', {});
+        next();
+      });
+    }
+
+    if (type === 'bigidea') {
+      ['btn-yes','btn-no'].forEach(function(id, idx){
+        document.getElementById(id).addEventListener('click', function(){
+          var v = idx === 0 ? 'yes' : 'no';
+          QuizState.set(step.varName, v);
+          track('quiz_answer', { step: step.id, question: step.varName, answer: v });
+          next();
+        });
+      });
+    }
+
+    if (type === 'single' || type === 'emotional') {
+      root.querySelectorAll('.opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var o = step.options[+btn.dataset.i];
+          QuizState.set(step.varName, o.v);
+          track('quiz_answer', { step: step.id, question: step.varName, answer: o.v });
+          if (step.commitEvent && (o.v === 'committed' || o.v === 'tonight')) track('CommitYes', {});
+          btn.classList.add('selected');
+          timers.push(setTimeout(next, 220));
+        });
+      });
+    }
+
+    if (type === 'multi' || type === 'zones') {
+      var selected = [];
+      var cta = document.getElementById('btn-cta');
+      root.querySelectorAll('.opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var o = step.options[+btn.dataset.i];
+          var idx = selected.indexOf(o.v);
+          if (idx === -1) {
+            if (o.exclusive) {
+              selected = [];
+              root.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('selected'); });
+            } else {
+              step.options.forEach(function(oo, j){
+                if (oo.exclusive) {
+                  var k = selected.indexOf(oo.v);
+                  if (k !== -1) { selected.splice(k, 1); root.querySelectorAll('.opt')[j].classList.remove('selected'); }
+                }
+              });
+            }
+            selected.push(o.v);
+            btn.classList.add('selected');
+          } else {
+            selected.splice(idx, 1);
+            btn.classList.remove('selected');
+          }
+          cta.disabled = selected.length === 0;
+        });
+      });
+      cta.addEventListener('click', function(){
+        QuizState.set(step.varName, selected);
+        track('quiz_answer', { step: step.id, question: step.varName, answer: selected });
+        next();
+      });
+    }
+
+    if (type === 'name') {
+      var input = document.getElementById('name-input');
+      var nameCta = document.getElementById('btn-cta');
+      nameCta.disabled = !(input.value.trim().length >= 2);
+      input.addEventListener('input', function(){ nameCta.disabled = input.value.trim().length < 2; });
+      input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !nameCta.disabled) nameCta.click(); });
+      nameCta.addEventListener('click', function(){
+        var v = input.value.trim();
+        QuizState.set('name', v.charAt(0).toUpperCase() + v.slice(1));
+        track('quiz_answer', { step: step.id, question: 'name_given', answer: true });
+        next();
+      });
+    }
+
+    if (type === 'interstitial' || type === 'diagnosis' || type === 'futurepacing' || type === 'break') {
+      document.getElementById('btn-cta').addEventListener('click', function(){
+        if (step.eventOnCta && step.event) track(step.event, {});
+        next();
+      });
+      if (type === 'break') startCarousel('brk-car', 2600);
+    }
+
+    if (type === 'goal') {
+      var extra = document.getElementById('goal-extra');
+      var goalCta = document.getElementById('btn-cta');
+      root.querySelectorAll('.opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          root.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          var o = step.options[+btn.dataset.i];
+          QuizState.set(step.varName, o.v);
+          track('quiz_answer', { step: step.id, question: step.varName, answer: o.v });
+          extra.innerHTML = '<div class="goal-badge">' + step.badge(o.v) + '</div>'
+            + '<div class="yuna-validate"><img src="assets/avatar-dryuna.jpg" alt=""><div class="tx">' + fill(step.validation()) + '</div></div>';
+          goalCta.style.visibility = 'visible';
+          goalCta.disabled = false;
+        });
+      });
+      goalCta.addEventListener('click', next);
+    }
+
+    if (type === 'loading') {
+      var items = step.items || [];
+      var totalMs = items.length * (step.itemMs || 1500) + 800;
+      var C = 2 * Math.PI * 52;
+      var ringFg = document.getElementById('ring-fg');
+      var ringPct = document.getElementById('ring-pct');
+      var currentLbl = document.getElementById('load-current');
+      var start = Date.now();
+      // anel + porcentagem (suave, 10fps)
+      timers.push(setInterval(function(){
+        var p = Math.min(1, (Date.now() - start) / totalMs);
+        ringFg.style.strokeDashoffset = C * (1 - p);
+        ringPct.textContent = Math.round(p * 100) + '%';
+      }, 100));
+      // checklist sequencial
+      var i = 0;
+      function tick(){
+        if (i > 0) {
+          var prev = document.getElementById('li-' + (i - 1));
+          if (prev) { prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.li-ico').textContent = '✅'; }
+        }
+        if (i >= items.length) {
+          timers.push(setTimeout(function(){
+            if (step.redirect) finish(); else next();
+          }, 800));
+          return;
+        }
+        var li = document.getElementById('li-' + i);
+        if (li) li.classList.add('active');
+        if (currentLbl) currentLbl.textContent = items[i] + '...';
+        i++;
+        timers.push(setTimeout(tick, step.itemMs || 1500));
+      }
+      tick();
+      if (step.carousel) startCarousel('load-car', 2100);
+      if (step.baCarousel) startCarousel('load-bacar', 2400);
+    }
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    var step = STEPS[current];
+    var html = chrome(step) + renderers[step.type](step);
+    root.innerHTML = html;
+    document.body.classList.toggle('has-ctabar', html.indexOf('cta-bar') !== -1);
+    bind(step);
+    track('quiz_step_view', { step: step.id, index: current, type: step.type });
+    if (step.event && !step.eventOnCta) track(step.event, { step: step.id });
+    // preload da próxima tela com imagem
+    var nxt = STEPS[current + 1];
+    if (nxt) {
+      var imgs = [];
+      if (nxt.heroImg) imgs.push(nxt.heroImg);
+      if (nxt.img) imgs.push(nxt.img);
+      if (nxt.img2) imgs.push(nxt.img2);
+      imgs.forEach(function(src){ var im = new Image(); im.src = src; });
+    }
+  }
+
+  /* ============================================================
+     EXIT-INTENT / BACK-REDIRECT DO QUIZ (melhoria 5)
+     Tentou sair → popup "seu plano de 21 dias está pronto" →
+     CTA leva para o loading final (T28), que entrega a oferta.
+     ============================================================ */
+  var T28_IDX = STEPS.findIndex(function(s){ return s.id === 'T28'; });
+  var exitArmed = false, mouseShown = false;
+
+  function showQuizExitPopup(){
+    if (document.getElementById('exit-popup')) return;
+    var name = QuizState.get('name') || '';
+    var div = document.createElement('div');
+    div.className = 'popup-overlay';
+    div.id = 'exit-popup';
+    div.innerHTML = '<div class="popup">'
+      + '<button class="px" id="exit-x">×</button>'
+      + '<span class="gift-emoji">🫐</span>'
+      + '<h3>Espera' + (name ? ', ' + name : '') + ' — ¡tu plan de 21 días del Pegamento de Arroz Morado Coreano está listo!</h3>'
+      + '<p>Tus respuestas ya fueron analizadas y tu protocolo personalizado está <b>generado y esperándote</b>. No lo pierdas — es solo un toque.</p>'
+      + '<button class="btn" id="exit-cta">Quiero mi acceso →</button>'
+      + '<button class="later" id="exit-later">No, quiero seguir respondiendo</button>'
+      + '</div>';
+    document.body.appendChild(div);
+    track('ExitIntentQuiz', { step: STEPS[current].id });
+    function close(){ var el = document.getElementById('exit-popup'); if (el) el.remove(); }
+    document.getElementById('exit-cta').addEventListener('click', function(){
+      track('ExitIntentAccept', {});
+      close();
+      go(T28_IDX);
+    });
+    document.getElementById('exit-x').addEventListener('click', close);
+    document.getElementById('exit-later').addEventListener('click', close);
+  }
+
+  function armExitTrap(){
+    if (exitArmed) return;
+    exitArmed = true;
+    history.pushState({ kbm: 1 }, '');
+    window.addEventListener('popstate', function(){
+      if (current >= 1 && current < T28_IDX) {
+        history.pushState({ kbm: 1 }, '');   // re-arma
+        showQuizExitPopup();
+      }
+      // na T1 ou já no final: deixa sair
+    });
+    document.addEventListener('mouseout', function(e){
+      if (mouseShown || e.relatedTarget) return;
+      if (e.clientY <= 0 && current >= 1 && current < T28_IDX) {
+        mouseShown = true;
+        showQuizExitPopup();
+      }
+    });
+  }
+
+  var _renderOrig = render;
+  render = function(){
+    _renderOrig();
+    if (current >= 1) armExitTrap();
+  };
+
+  render();
+})();
