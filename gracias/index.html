@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>¡Gracias! Tu Compra Fue Confirmada</title>
+<meta name="robots" content="noindex">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18402472165"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18402472165');
+</script>
+
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('track', 'PageView');
+  fbq('trackCustom', 'FunnelComplete');
+</script>
+
+<!-- Utmify UTM capture -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
+<!-- Utmify pixel (Glow - 777) -->
+<script>
+  window.pixelId = "6aab0a25499acc6d20a06991";
+  (function(){
+    var s = document.createElement("script");
+    s.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+    s.async = true; s.defer = true;
+    document.head.appendChild(s);
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --wine-deep:#4A0E24;
+    --wine:#6E2749;
+    --wine-mid:#8B4569;
+    --rose:#B1677F;
+    --blush:#FBF3F5;
+    --blush-soft:#F6DEE1;
+    --cream:#FFFDFC;
+    --ink:#3A2230;
+    --ink-soft:#7A5C68;
+    --line:#EED9DE;
+    --gold:#C79A3B;
+    --green:#2E9E5B;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--blush);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:520px;margin:0 auto;padding:32px 20px 40px}
+
+  .brandline{display:flex;align-items:center;justify-content:center;gap:8px;font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--wine-mid);margin-bottom:18px}
+  .brandline .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+  .hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:22px}
+  .stamp{width:60px;height:60px;border-radius:50%;background:linear-gradient(155deg,var(--wine),var(--wine-deep));display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px rgba(74,14,36,.22)}
+  .stamp svg{width:28px;height:28px}
+  h1{font-family:'Playfair Display',serif;font-weight:800;font-size:24px;line-height:1.22;margin:0;color:var(--wine-deep)}
+  h1 em{font-style:italic;font-weight:800;color:var(--wine-mid)}
+  .sub{max-width:38ch;color:var(--ink-soft);font-size:13.5px;line-height:1.6;margin:0}
+
+  section{background:var(--cream);border:1.5px solid var(--line);border-radius:18px;padding:22px 20px;margin-bottom:16px;box-shadow:0 14px 30px rgba(74,14,36,.06)}
+
+  .section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .section-head .icon{width:34px;height:34px;border-radius:50%;background:var(--blush-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-head .icon svg{width:17px;height:17px;stroke:var(--wine-mid)}
+  .section-head h2{font-family:'Playfair Display',serif;font-weight:800;font-size:16.5px;margin:0;color:var(--wine-deep)}
+
+  section p{color:var(--ink-soft);line-height:1.65;margin:0;font-size:13px}
+  section p + p{margin-top:10px}
+
+  .access-note{display:flex;gap:12px;align-items:flex-start;background:var(--blush);border-radius:14px;padding:14px 16px;margin-top:14px}
+  .access-note svg{width:17px;height:17px;stroke:var(--gold);flex-shrink:0;margin-top:2px}
+  .access-note p{font-size:12px;margin:0;color:var(--ink)}
+
+  .support-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .support-row .label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .support-row a{color:var(--wine-mid);font-weight:700;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;font-size:13px}
+
+  .items-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  .item-row{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink)}
+  .item-row .ic{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--blush-soft);display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .item-row .ic svg{width:10px;height:10px}
+  .item-row b{color:var(--wine-deep)}
+
+  .protocol-card{background:linear-gradient(155deg,var(--wine) 0%, var(--wine-deep) 100%);border:none;color:#FBF3F5;text-align:center;padding:28px 22px}
+  .protocol-card .section-head{justify-content:center}
+  .protocol-card .icon{background:rgba(255,255,255,.16)}
+  .protocol-card .icon svg{stroke:#FBF3F5}
+  .protocol-card h2{color:#FBF3F5}
+  .protocol-card p{color:rgba(251,243,245,.86);max-width:40ch;margin:0 auto}
+  .protocol-card .motto{margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold)}
+
+  footer{text-align:center;font-size:11px;color:var(--ink-soft);letter-spacing:.02em;line-height:1.6;margin-top:6px}
+
+  @media (max-width:460px){
+    .support-row{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="brandline"><span class="dot"></span> RITUAL COREANO · PIEL ILUMINADA <span class="dot"></span></div>
+
+  <div class="hero">
+    <div class="stamp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FBF3F5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <h1>¡Gracias! Tu compra fue <em>confirmada</em></h1>
+    <p class="sub">Tu pago fue aprobado con éxito. En instantes recibirás un correo con las instrucciones de acceso — y ya puedes ingresar a la plataforma ahora mismo.</p>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 2v4M17 2v4M3 10h18"/></svg></span>
+      <h2>Tu acceso ya está disponible</h2>
+    </div>
+    <p>Todo tu material puede ser accedido desde la computadora, el celular o la tablet, cuando y donde quieras — a tu propio ritmo, sin apuro.</p>
+    <div class="items-list">
+      <div class="item-row">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#8B4569" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <span><b>El Ritual Coreano para una Piel Luminosa</b> — tu programa principal, con la receta del pegamento y el tai chi facial.</span>
+      </div>
+      <div class="item-row">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#8B4569" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <span>Tus <b>bonos gratis</b> incluidos en la compra (Protocolo Antimanchas, Código de Longevidad, Recetas de Piel).</span>
+      </div>
+      <div class="item-row">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#8B4569" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <span>Cualquier <b>oferta adicional</b> que hayas aceptado en el camino, ya está sumada a tu acceso automáticamente.</span>
+      </div>
+    </div>
+    <div class="access-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+      <p><strong>¿No encuentras el correo?</strong> Revisa las carpetas de Spam, Promociones o Correo no deseado antes de contactar al soporte.</p>
+    </div>
+    <div class="support-row">
+      <span class="label">¿Necesitas ayuda?</span>
+      <a href="mailto:soporte@ritualcoreano.online">soporte@ritualcoreano.online</a>
+    </div>
+  </section>
+
+  <section class="protocol-card">
+    <div class="section-head">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c2 3 4 5 4 8a4 4 0 01-8 0c0-3 2-5 4-8z"/><path d="M6 20c1-3 3-4 6-4s5 1 6 4"/></svg></span>
+      <h2>Ahora es solo empezar</h2>
+    </div>
+    <p>Reserva unos minutos de tu día para seguir el protocolo y disfrutar cada etapa preparada para ti. La constancia es lo que hace que tu piel responda.</p>
+    <p class="motto">"Piel luminosa es ritual, no prisa."</p>
+  </section>
+
+  <footer>
+    Gracias por tu confianza · Ritual Coreano para una Piel Luminosa<br>
+    Los resultados pueden variar de persona a persona. Este contenido tiene carácter informativo y no sustituye la orientación médica.
+  </footer>
+
+</div>
+
+</body></html>
