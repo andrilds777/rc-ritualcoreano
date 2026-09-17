@@ -1,0 +1,303 @@
+/* ============================================================
+   KOREAN BLUEBERRY GLUE — QUIZ · Design System "K-Clinic Clean"
+   Paleta aprovada (Layout 1) + fonte Inter (Layout 2) · v2
+   ============================================================ */
+:root{
+  --blueberry:#5B6BD6; --blueberry-deep:#4350A8; --blueberry-light:#8E9FE5; --blueberry-bg:#EEF1FC;
+  --cream:#FAF8F4; --card:#FFFFFF; --ink:#23263A; --ink-soft:#6B7080;
+  --gold:#C9A227; --line:#E9E5DC;
+  --red:#D64545; --red-bg:#FCEEEE; --green:#2E9E5B; --green-bg:#EAF7EF;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+body.has-ctabar{padding-bottom:96px}
+
+/* ---------- Shell ---------- */
+.app{max-width:480px;margin:0 auto;min-height:60vh;display:flex;flex-direction:column;padding:14px 18px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;min-height:40px;margin-bottom:8px}
+.back-btn{background:none;border:none;font-size:20px;color:var(--ink-soft);cursor:pointer;padding:4px 10px 4px 0;line-height:1}
+.back-btn.hidden{visibility:hidden}
+.trust{font-size:9.5px;color:var(--ink-soft);font-weight:600;text-align:right}
+.trust b{color:var(--gold)}
+
+/* ---------- Logo / identidade ---------- */
+.brand{display:flex;align-items:center;gap:8px}
+.brand .logo-berry{width:30px;height:30px;flex:0 0 30px}
+.brand-tx b{display:block;font-size:13px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-.2px}
+.brand-tx b span{color:var(--blueberry-deep)}
+.brand-tx small{display:block;font-size:7.5px;font-weight:800;letter-spacing:1.6px;color:var(--gold);text-transform:uppercase;margin-top:1px}
+
+/* ---------- Progress (5 seções nomeadas) ---------- */
+.progress-wrap{margin:2px 0 16px}
+.progress-wrap.hidden{display:none}
+.progress-label{font-size:10.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--blueberry-deep);margin-bottom:6px;text-align:center}
+.progress-track{display:flex;gap:4px}
+.progress-seg{flex:1;height:5px;border-radius:3px;background:#E4E0D6;overflow:hidden}
+.progress-seg .fill{height:100%;width:0;background:var(--blueberry);border-radius:3px;transition:width .35s ease}
+
+/* ---------- Telas ---------- */
+.screen{display:flex;flex-direction:column;flex:1;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h1.q-title{font-size:23px;font-weight:900;line-height:1.18;margin-bottom:6px;text-align:center}
+.q-sub{font-size:13.5px;color:var(--ink-soft);line-height:1.5;text-align:center;margin-bottom:16px}
+.q-sub b{color:var(--ink)}
+
+/* ---------- Opções ---------- */
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--line);border-radius:14px;
+  padding:15px 16px;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;width:100%;
+  font-family:'Inter';transition:border-color .15s,background .15s;line-height:1.35}
+.opt .emoji{font-size:21px;flex:0 0 26px;text-align:center}
+.opt:active{transform:scale(.985)}
+.opt.selected{border-color:var(--blueberry);background:var(--blueberry-bg)}
+.opt .check{margin-left:auto;width:22px;height:22px;border:2px solid var(--line);border-radius:6px;flex:0 0 22px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:all .15s}
+.opt.selected .check{background:var(--blueberry);border-color:var(--blueberry)}
+.opt.single .check{border-radius:50%}
+
+/* grid de zonas (T5) */
+.zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.zone-grid .opt{flex-direction:column;gap:6px;padding:12px 10px;text-align:center;font-size:13px}
+.zone-grid .opt img{width:84px;height:84px;object-fit:contain;border-radius:10px}
+.zone-grid .opt .check{margin:4px auto 0}
+
+/* ---------- Botões / CTA bar fixa (sempre visível) ---------- */
+.btn{display:block;width:100%;border:none;border-radius:14px;background:var(--blueberry);color:#fff;font-weight:800;
+  font-size:15.5px;padding:16px;text-align:center;cursor:pointer;font-family:'Inter';text-decoration:none;
+  box-shadow:0 8px 18px rgba(91,107,214,.35);transition:opacity .15s}
+.btn:disabled{opacity:.4;box-shadow:none;cursor:default}
+.btn.green{background:var(--green);box-shadow:0 8px 18px rgba(46,158,91,.3)}
+.btn.pulse-soft{animation:softpulse 2.6s ease-in-out infinite}
+@keyframes softpulse{0%,100%{transform:scale(1);box-shadow:0 8px 18px rgba(91,107,214,.35)}50%{transform:scale(1.012);box-shadow:0 10px 24px rgba(91,107,214,.48)}}
+.cta-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:40;
+  padding:26px 18px 16px;background:linear-gradient(to top,var(--cream) 62%,rgba(250,248,244,0))}
+.cta-bar .micro{margin-top:7px}
+.yn-row{display:flex;gap:10px}
+.yn-row .btn{flex:1}
+.yn-row .btn.ghost{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.micro{text-align:center;font-size:10px;color:var(--ink-soft);margin-top:9px;font-weight:600}
+
+/* ---------- Input nome ---------- */
+.name-input{width:100%;border:2px solid var(--line);border-radius:14px;background:var(--card);padding:16px;
+  font-size:16px;font-family:'Inter';font-weight:600;color:var(--ink);text-align:center;outline:none}
+.name-input:focus{border-color:var(--blueberry)}
+
+/* ---------- Landing (T1) ---------- */
+.hero-img{border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:0 10px 24px rgba(67,80,168,.25)}
+.hero-img img{width:100%;display:block}
+.nob{font-size:12px;font-weight:700;color:var(--blueberry-deep);text-align:center;margin:6px 0 10px}
+.urg{text-align:center;font-size:10.5px;color:#B0683A;font-weight:700;margin-top:8px}
+.bullets{display:flex;flex-direction:column;gap:9px;margin-bottom:4px}
+.bullet{display:flex;gap:10px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;
+  padding:11px 13px;font-size:12.5px;line-height:1.5;font-weight:500;color:var(--ink)}
+.bullet .bi{flex:0 0 18px;color:var(--blueberry);font-weight:900}
+.bullet b{font-weight:800}
+.ba-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.ba-strip .bas{background:var(--card);border:1.5px solid var(--line);border-radius:11px;overflow:hidden}
+.ba-strip .bas .pair{display:flex}
+.ba-strip .bas img{width:50%;aspect-ratio:4/5;object-fit:cover;display:block}
+.ba-strip .bas .nm{font-size:8.5px;font-weight:800;text-align:center;padding:5px 3px;color:var(--ink-soft)}
+.dr-chip{display:flex;gap:10px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px;margin-top:10px}
+.dr-chip img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:0 0 44px}
+.dr-chip .nm{font-size:12px;font-weight:800}
+.dr-chip .nm span{color:#3B82F6;font-size:11px}
+.dr-chip .cr{font-size:10px;color:var(--ink-soft);line-height:1.4}
+
+/* ---------- Big Idea (T2B) ---------- */
+.bi-card{position:relative;border-radius:16px;overflow:hidden;margin-bottom:12px;background:var(--card);border:1.5px solid var(--line)}
+.bi-card img,.bi-card .bi-ph{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.bi-card .bi-ph{background:linear-gradient(135deg,#E8E4F8,#C9D0F0);display:flex;align-items:center;justify-content:center;color:#6A76C4;font-size:10px;font-weight:800;text-align:center;line-height:1.5;padding:14px}
+.bi-card .bi-cap{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;color:#fff;font-size:12.5px;font-weight:600;font-style:italic;line-height:1.45;
+  background:linear-gradient(to top,rgba(20,22,40,.92) 30%,rgba(20,22,40,0))}
+.bi-card .bi-cap b{color:#CDE3FF;font-style:normal}
+.bi-card .bi-cap .bi-author{display:block;margin-top:5px;font-style:normal;font-weight:800;font-size:11px;letter-spacing:.3px;color:#fff;opacity:.8}
+
+/* ---------- Interstitials ---------- */
+.inter{display:flex;flex-direction:column;flex:1}
+.inter h2{font-size:21px;font-weight:900;line-height:1.2;margin-bottom:10px;text-align:center}
+.inter p.body{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:12px}
+.inter p.body b{color:var(--ink)}
+.kicker-tag{display:block;width:fit-content;margin:0 auto 8px;background:var(--blueberry);color:#fff;font-size:10px;font-weight:900;
+  letter-spacing:.6px;padding:4px 12px;border-radius:8px;text-transform:uppercase}
+.kicker-tag.red{background:var(--red)}
+.voice-chip{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.voice-chip img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+.voice-chip .vn{font-size:11.5px;font-weight:800}
+.voice-chip .vn span{color:#3B82F6}
+.voice-chip .vr{font-size:10px;color:var(--ink-soft)}
+
+/* ---------- T16 inimigos (cards gradiente condicionais) ---------- */
+.enemy-v2{position:relative;border-radius:16px;overflow:hidden;margin-bottom:11px;min-height:128px;display:flex;align-items:flex-end}
+.enemy-v2 .ev-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;
+  background:linear-gradient(135deg,#3A4063,#23263A)}
+.enemy-v2 .ev-bg img{width:100%;height:100%;object-fit:cover}
+.enemy-v2 .ev-tx{position:relative;width:100%;padding:34px 14px 13px;color:#fff;
+  background:linear-gradient(to top,rgba(15,17,32,.95) 45%,rgba(15,17,32,0))}
+.enemy-v2 .ev-t{font-size:14.5px;font-weight:900;margin-bottom:4px}
+.enemy-v2 .ev-b{font-size:12px;line-height:1.5;color:#C8CCDF}
+.enemy-v2 .ev-b b{color:#fff}
+.study-line{background:var(--blueberry-bg);border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.55;margin:4px 0 10px}
+.study-line b{color:var(--blueberry-deep)}
+.absolve{font-size:14.5px;font-weight:800;text-align:center;line-height:1.45;margin:6px 0 10px}
+
+/* ---------- T15 mecanismo (cards 2 colunas, texto sobreposto) ---------- */
+.shield-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.shield-card{position:relative;border-radius:14px;overflow:hidden;background:#fff;border:1.5px solid var(--line)}
+.shield-card img{width:100%;aspect-ratio:1/1.15;object-fit:cover;display:block}
+.shield-card .sc-n{position:absolute;top:8px;left:8px;width:24px;height:24px;border-radius:50%;background:var(--blueberry);
+  color:#fff;font-size:12.5px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,.25)}
+.shield-card .sc-cap{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 9px;color:#fff;
+  background:linear-gradient(to top,rgba(20,22,40,.93) 38%,rgba(20,22,40,0))}
+.shield-card .sc-cap b{display:block;font-size:12px;font-weight:900;margin-bottom:2px}
+.shield-card .sc-cap span{font-size:10.5px;line-height:1.35;display:block;color:#D4D8EC}
+.shield-card.hero-step{border:2px solid var(--blueberry);box-shadow:0 6px 16px rgba(91,107,214,.3)}
+.demo-box{background:var(--card);border:2px solid var(--blueberry);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.demo-box .apple43{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 62%;display:block}
+.demo-box .cap{padding:11px 13px;font-size:12.5px;line-height:1.5;color:var(--ink-soft)}
+.demo-box .cap b{color:var(--ink)}
+
+/* ---------- Prova / antes-depois ---------- */
+.ba-card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.ba-pair{display:flex}
+.ba-pair .half{position:relative;width:50%}
+.ba-pair img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover}
+.ba-tag{position:absolute;top:8px;left:8px;background:rgba(35,38,58,.82);color:#fff;font-size:9px;font-weight:800;
+  letter-spacing:1px;padding:3px 8px;border-radius:6px;text-transform:uppercase}
+.ba-tag.after{background:var(--blueberry)}
+.ba-meta{padding:11px 13px}
+.stars{color:var(--gold);font-size:13px;letter-spacing:2px;margin-bottom:4px}
+.ba-name{font-size:13px;font-weight:800;margin-bottom:3px}
+.ba-quote{font-size:12.5px;color:var(--ink-soft);line-height:1.5;font-style:italic}
+.ba-claim{font-size:12px;font-weight:900;color:var(--blueberry-deep);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.disclaimer{font-size:9px;color:#A9A39A;text-align:center;margin-top:8px;line-height:1.4}
+
+/* ---------- Emocionais ---------- */
+.emo-img{border-radius:14px;overflow:hidden;margin-bottom:14px}
+.emo-img img{width:100%;display:block;max-height:300px;object-fit:cover}
+.emo-cap{font-size:10.5px;color:var(--ink-soft);text-align:center;font-weight:700;margin:-8px 0 12px}
+.emo-quote{font-size:20px;font-weight:900;font-style:italic;text-align:center;line-height:1.3;margin-bottom:16px}
+
+/* ---------- T23 meta ---------- */
+.goal-badge{background:var(--blueberry-bg);border:1.5px solid var(--blueberry-light);border-radius:12px;text-align:center;
+  font-size:14px;font-weight:800;color:var(--blueberry-deep);padding:11px;margin-top:14px;animation:fadeUp .3s ease}
+.yuna-validate{display:flex;gap:11px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;
+  padding:12px;margin-top:10px;animation:fadeUp .35s ease}
+.yuna-validate img{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:0 0 42px}
+.yuna-validate .tx{font-size:12.5px;line-height:1.5;color:var(--ink-soft)}
+.yuna-validate .tx b{color:var(--ink)}
+
+/* ---------- LOADING v2 (anel de progresso) ---------- */
+.loadv2{display:flex;flex-direction:column;align-items:center;flex:1;padding-top:16px}
+.ring-wrap{position:relative;width:118px;height:118px;margin-bottom:16px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:#ECE8DE;stroke-width:9}
+.ring-fg{fill:none;stroke:url(quiz.css#ringGrad);stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:var(--blueberry-deep)}
+.load-title{font-size:18px;font-weight:900;text-align:center;margin-bottom:4px}
+.load-current{font-size:12.5px;font-weight:600;color:var(--blueberry-deep);text-align:center;min-height:18px;margin-bottom:16px;animation:fadeUp .3s ease}
+.load-list{display:flex;flex-direction:column;gap:8px;width:100%;margin-bottom:16px}
+.load-item{display:flex;gap:10px;align-items:center;font-size:13px;font-weight:600;color:var(--ink-soft);
+  background:var(--card);border:1.5px solid var(--line);border-radius:11px;padding:10px 13px;opacity:.45;transition:all .3s}
+.load-item.active{opacity:1;color:var(--ink);border-color:var(--blueberry-light)}
+.load-item.done{opacity:1;color:var(--ink);border-color:#BFE5CD;background:var(--green-bg)}
+.load-item .li-ico{flex:0 0 20px;text-align:center}
+.load-social{font-size:11px;color:var(--ink-soft);font-weight:700;margin-top:4px}
+
+/* carrossel (depoimentos / antes-depois) */
+.carousel{position:relative;width:100%;margin-bottom:10px}
+.carousel .slide{display:none;animation:fadeUp .4s ease}
+.carousel .slide.active{display:block}
+.car-dots{display:flex;gap:6px;justify-content:center;margin-bottom:6px}
+.car-dots .dot{width:7px;height:7px;border-radius:50%;background:#D9D4C8;transition:background .2s}
+.car-dots .dot.active{background:var(--blueberry)}
+.t-card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:13px 15px}
+.t-card .stars{margin-bottom:5px}
+.t-card .tq{font-size:12.5px;line-height:1.55;color:var(--ink);font-style:italic;margin-bottom:7px}
+.t-card .tn{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;color:var(--ink-soft)}
+.t-card .tn .av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--blueberry-light),var(--blueberry-deep));
+  color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.t-card .tn .vf{color:var(--green);font-size:10px}
+
+/* credenciais (loading T14) */
+.cred-block{display:flex;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px;width:100%;margin-bottom:10px}
+.cred-block img{width:74px;height:74px;border-radius:12px;object-fit:cover;flex:0 0 74px}
+.cred-block .cb-n{font-size:13px;font-weight:900}
+.cred-block .cb-n span{color:#3B82F6;font-size:11px}
+.cred-block ul{list-style:none;margin-top:4px}
+.cred-block li{font-size:10.5px;color:var(--ink-soft);line-height:1.5;display:flex;gap:5px}
+.cred-block li::before{content:'✦';color:var(--gold)}
+
+/* ---------- T25 diagnóstico v2 ---------- */
+.diag-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.diag-head img{width:54px;height:54px;border-radius:50%;object-fit:cover;flex:0 0 54px;border:2px solid var(--blueberry-light)}
+.diag-head .dh-t{font-size:15px;font-weight:900;line-height:1.25}
+.diag-head .dh-s{font-size:10.5px;color:var(--ink-soft);font-weight:600}
+.diag-box-red{background:var(--red-bg);border:2px solid #EFC7C7;border-radius:14px;padding:14px;margin-bottom:10px}
+.status-line{text-align:center;margin-bottom:3px;font-size:12px;font-weight:800;color:var(--ink-soft);letter-spacing:1px;text-transform:uppercase}
+.status-value{text-align:center;font-size:27px;font-weight:900;color:var(--red);margin-bottom:11px;line-height:1.1}
+.status-gauge{display:flex;gap:4px;margin-bottom:5px}
+.status-gauge .zone{flex:1;height:12px;border-radius:6px;opacity:.28;position:relative}
+.status-gauge .zone.z-off{background:var(--red)}
+.status-gauge .zone.z-weak{background:#E8A13C}
+.status-gauge .zone.z-on{background:var(--green)}
+.status-gauge .zone.lit{opacity:1}
+.status-gauge .zone .pin{position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:21px;height:21px;border-radius:50%;
+  background:#fff;border:4px solid var(--red);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.gauge-labels{display:flex;gap:4px;margin-bottom:13px}
+.gauge-labels span{flex:1;text-align:center;font-size:8.5px;font-weight:800;letter-spacing:.5px;color:var(--ink-soft);text-transform:uppercase}
+.diag-alert-title{font-size:12.5px;font-weight:900;margin-bottom:8px}
+.diag-alert{display:flex;gap:8px;font-size:12.5px;line-height:1.5;margin-bottom:7px;color:var(--ink)}
+.diag-alert .x{flex:0 0 16px}
+.diag-alert i{font-style:normal;background:#FBE3E3;border-radius:4px;padding:0 3px;font-weight:700}
+.diag-box-green{background:var(--green-bg);border:2px solid #BFE5CD;border-radius:14px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.55}
+.diag-box-green b{color:var(--green)}
+.proj-chart{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px 8px;margin-bottom:10px}
+.proj-chart .ng-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-soft);margin-bottom:6px;text-align:center}
+.proj-chart svg{width:100%;display:block}
+.benefit-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
+.benefit-card{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px}
+.benefit-card .bc-i{font-size:19px;margin-bottom:5px}
+.benefit-card .bc-t{font-size:11.5px;font-weight:700;line-height:1.4}
+.diag-sign{text-align:right;margin-top:2px}
+.signature{font-family:'Snell Roundhand','Brush Script MT',cursive;font-size:26px;color:var(--blueberry-deep);text-align:center}
+
+/* ---------- T25B future pacing ---------- */
+.fp-hero{border-radius:16px;overflow:hidden;margin-bottom:12px}
+.fp-hero img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.fp-timeline{border-left:3px solid var(--blueberry-light);margin:6px 0 12px 8px;padding-left:16px}
+.fp-item{margin-bottom:13px}
+.fp-item .wk{font-size:10.5px;font-weight:900;color:var(--blueberry-deep);text-transform:uppercase;letter-spacing:1px}
+.fp-item .tx{font-size:13px;line-height:1.55;color:var(--ink)}
+.fp-item .tx b{color:var(--blueberry-deep)}
+.fp-item.gold .wk{color:var(--gold)}
+
+/* ---------- T26 compromisso ---------- */
+.lock-banner{background:var(--blueberry-bg);border:1.5px solid var(--blueberry-light);border-radius:14px;padding:13px 15px;
+  font-size:13.5px;line-height:1.5;font-weight:600;margin-bottom:16px;text-align:center}
+
+/* ---------- T27 prova coluna única ---------- */
+.proof-col{display:flex;flex-direction:column;gap:12px;margin-bottom:6px}
+.pg-ph{width:100%;aspect-ratio:8/5;background:linear-gradient(135deg,#E8E4F8,#D5DBF4);display:flex;align-items:center;justify-content:center;color:#7A85C9;font-size:10px;font-weight:800;text-align:center;padding:8px;line-height:1.4}
+
+footer.q-footer{text-align:center;font-size:9px;color:#B5AFA5;padding:18px 24px 6px;line-height:1.5;max-width:480px;margin:0 auto}
+
+/* ---------- Popup / exit-intent ---------- */
+.popup-overlay{position:fixed;inset:0;background:rgba(20,22,40,.64);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeUp .25s ease}
+.popup{background:var(--cream);border-radius:20px;max-width:420px;width:100%;padding:26px 20px 20px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35);position:relative;max-height:92vh;overflow:auto}
+.popup h3{font-size:20px;font-weight:900;line-height:1.25;margin-bottom:8px}
+.popup p{font-size:13px;color:var(--ink-soft);line-height:1.55;margin-bottom:14px}
+.popup p b{color:var(--ink)}
+.popup .gift-emoji{font-size:44px;margin-bottom:8px;display:block}
+.popup .px{position:absolute;top:8px;right:13px;background:none;border:none;font-size:21px;color:var(--ink-soft);cursor:pointer;line-height:1}
+.popup .later{display:block;margin:10px auto 0;font-size:11.5px;color:var(--ink-soft);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Inter'}
+
+/* ---------- Roleta (Wheel of Youth) ---------- */
+.wheel-kicker{font-size:10px;font-weight:900;letter-spacing:2.2px;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+.wheel-wrap{position:relative;width:272px;height:272px;margin:12px auto 16px}
+.wheel-pointer{position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:21px solid #C0392B;z-index:3;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+#wheel-svg{width:272px;height:272px;border-radius:50%;box-shadow:0 12px 30px rgba(67,80,168,.3);transition:transform 4.4s cubic-bezier(.12,.62,.06,1)}
+.wheel-result{background:var(--green-bg);border:2px solid #BFE5CD;border-radius:14px;padding:14px;font-size:14.5px;font-weight:800;margin-bottom:12px;line-height:1.4;animation:fadeUp .35s ease}
+.wheel-result small{display:block;font-size:11.5px;font-weight:600;color:var(--ink-soft);margin-top:4px}
+.discount-strike{text-decoration:line-through;color:var(--ink-soft);font-weight:700}
+.wheel-applied{background:var(--green);color:#fff;font-size:12px;font-weight:800;border-radius:10px;padding:8px 12px;margin:0 0 12px;text-align:center}
