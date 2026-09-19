@@ -645,21 +645,24 @@
   document.querySelectorAll('.pd-val').forEach(function(pd){ pd.textContent = PD_FULL; });
   document.querySelectorAll('.pd-cta').forEach(function(pd){ pd.textContent = PD_FULL + '/día'; });
 
-  var CHECKOUT_URL = 'https://pay.hotmart.com/A107573275D?off=dal16amf&checkoutMode=10';
-  var mainUrl = withStoredUtm(CHECKOUT_URL);
-  document.querySelectorAll('[data-checkout-link]').forEach(function(btn) {
-    btn.setAttribute('href', mainUrl);
-    btn.removeAttribute('aria-disabled');
-    btn.onclick = function() {
-      track('InitiateCheckout', { position: btn.id });
-      var dest = btn.getAttribute('href');
-      // Pequeno atraso proposital: o pixel do Utmify manda o evento via fetch()
-      // comum (não sendBeacon), que pode ser cancelado pelo navegador se a
-      // navegação pra Hotmart acontecer no mesmo instante. Esses ~250ms dão
-      // tempo do request sair de fato antes de trocarmos de página.
-      if (dest) setTimeout(function(){ window.location.href = dest; }, 250);
-    };
-  });
+ var CHECKOUT_URL = 'https://pay.hotmart.com/A107573275D?off=dal16amf&checkoutMode=10';
+document.querySelectorAll('[data-checkout-link]').forEach(function(btn) {
+  // Deixa o link "cru" (sem nossa UTM) logo de cara, pra dar tempo do script
+  // da Utmify achar esse link e decorar ele sozinho com o utm_term dela.
+  btn.setAttribute('href', CHECKOUT_URL);
+  btn.removeAttribute('aria-disabled');
+  btn.onclick = function() {
+    track('InitiateCheckout', { position: btn.id });
+    // Monta o link final só na hora do clique, pegando o href atual (que já
+    // pode estar com o utm_term da Utmify) e só completando o que faltar.
+    var dest = withStoredUtm(btn.getAttribute('href'));
+    // Pequeno atraso proposital: o pixel do Utmify manda o evento via fetch()
+    // comum (não sendBeacon), que pode ser cancelado pelo navegador se a
+    // navegação pra hotmart acontecer no mesmo instante. Esses ~250ms dão
+    // tempo do request sair de fato antes de trocarmos de página.
+    if (dest) setTimeout(function(){ window.location.href = dest; }, 250);
+  };
+});
   /* ---- checkout end ---- */
 
   track('SalesPageView', { shield: status.label, goal: a.goal_years || null });
