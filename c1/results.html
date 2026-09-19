@@ -651,7 +651,8 @@ document.querySelectorAll('[data-checkout-link]').forEach(function(btn) {
   // da Utmify achar esse link e decorar ele sozinho com o utm_term dela.
   btn.setAttribute('href', CHECKOUT_URL);
   btn.removeAttribute('aria-disabled');
-  btn.onclick = function() {
+     btn.onclick = function(event) {
+    event.preventDefault();
     track('InitiateCheckout', { position: btn.id });
     // Monta o link final só na hora do clique, pegando o href atual (que já
     // pode estar com o utm_term da Utmify) e só completando o que faltar.
